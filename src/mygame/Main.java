@@ -55,7 +55,7 @@ public class Main extends SimpleApplication {
     }
 
     private void initScene() {
-        firstSceneModel = assetManager.loadModel("Scenes/firstScene.j3o");
+        firstSceneModel = assetManager.loadModel("Scenes/myScene.j3o");
         rootNode.attachChild(firstSceneModel);
     
         /** A white ambient light source. */ 
