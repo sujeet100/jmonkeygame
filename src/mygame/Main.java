@@ -5,8 +5,10 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
@@ -70,13 +72,24 @@ public class Main extends SimpleApplication {
     rootNode.addLight(sun); 
     
     rootNode.attachChild(SkyFactory.createSky(assetManager,
-            assetManager.loadTexture("Textures/skys/stormydays_ft.jpg"),
-            assetManager.loadTexture("Textures/skys/stormydays_bk.jpg"),
-            assetManager.loadTexture("Textures/skys/stormydays_lf.jpg"),
-            assetManager.loadTexture("Textures/skys/stormydays_rt.jpg"),
-            assetManager.loadTexture("Textures/skys/stormydays_up.jpg"),
-            assetManager.loadTexture("Textures/skys/stormydays_dn.jpg")));
+            assetManager.loadTexture("Textures/skys/miramar_ft.jpg"),
+            assetManager.loadTexture("Textures/skys/miramar_bk.jpg"),
+            assetManager.loadTexture("Textures/skys/miramar_lf.jpg"),
+            assetManager.loadTexture("Textures/skys/miramar_rt.jpg"),
+            assetManager.loadTexture("Textures/skys/miramar_up.jpg"),
+            assetManager.loadTexture("Textures/skys/miramar_dn.jpg")));
     
+    /* Load a tree model */
+    Spatial treeGeo = assetManager.loadModel("Models/Tree/Tree.mesh.j3o");
+    treeGeo.scale(5); // make tree bigger
+    treeGeo.setQueueBucket(RenderQueue.Bucket.Transparent); // leaves are transparent
+    rootNode.attachChild(treeGeo);
+    /* Place the tree at (0,?,-30) on the terrain. What is the y value? */
+    Vector3f treeLoc = new Vector3f(0,0,-30);
+    /* Don't use terrain.getLocalTranslation() to determine y! */
+    //treeLoc.setY( terrain.getLocalTranslation().getY() ); // tree stuck in hill!
+    /* Use terrain.getHeight() to determine y! */
+    treeGeo.setLocalTranslation(treeLoc);
     
     }
 }
